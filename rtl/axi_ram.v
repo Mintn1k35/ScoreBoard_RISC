@@ -40,7 +40,7 @@ module axi_ram #
     // Width of wstrb (width of data bus in words)
     parameter STRB_WIDTH = (DATA_WIDTH/8),
     // Width of ID signal
-    parameter ID_WIDTH = 8,
+    parameter ID_WIDTH = 12,
     // Extra pipeline register on output
     parameter PIPELINE_OUTPUT = 0
 )
@@ -147,7 +147,7 @@ reg s_axi_rvalid_pipe_reg = 1'b0;
 reg [DATA_WIDTH-1:0] mem[(2**VALID_ADDR_WIDTH)-1:0];
 
 initial begin
-        $readmemh("Ecall.mem", mem);
+        $readmemh("Test.mem", mem);
     end
 
 wire [VALID_ADDR_WIDTH-1:0] s_axi_awaddr_valid = s_axi_awaddr >> (ADDR_WIDTH - VALID_ADDR_WIDTH);
