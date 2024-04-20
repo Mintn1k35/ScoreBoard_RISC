@@ -3,6 +3,7 @@ module ICache_Controller(
 	input wire clk,
 	input wire rst_n,
 	input wire stop,
+	input wire stop_fetch,
 	input wire rvalid,
 	input wire rlast,
 	input wire [31:0] rdata,
@@ -23,9 +24,6 @@ module ICache_Controller(
 
 	wire stall = !arready | stop;
 
-	// PC_Control PC_Control_instance(clk, rst_n, stall, j_accept, j_addr, araddr);
-
-
 	// Controller State  00 - transfer addr, 01 - Cache received addr, 10 - enable rready, 11 - received data
 
 	reg [1:0] control_state;
@@ -38,6 +36,7 @@ module ICache_Controller(
 			if(control_state == 2'b10) begin
 				if(j_accept) araddr <= j_addr;
 				else if(stop) araddr <= araddr;
+				else if (stop_fetch) araddr <= araddr - 32'd4;
 				else if (ecall) araddr <= 32'd200;
 			end
 			else begin
@@ -50,6 +49,7 @@ module ICache_Controller(
 	always @(posedge clk or negedge rst_n) begin
 		if(!rst_n) begin
 			control_state <= 2'b00;
+			araddr <= 32'd0;
 		end
 		else begin
 			case(control_state)
@@ -60,11 +60,12 @@ module ICache_Controller(
 					else begin
 						control_state <= control_state;
 					end
+					// araddr <= araddr;
 				end
 
 				2'b01: begin
 					control_state <= 2'b10;
-					araddr <= araddr;
+					// araddr <= araddr;
 				end
 
 				2'b10: begin
@@ -74,6 +75,7 @@ module ICache_Controller(
 					else begin
 						control_state <= control_state;
 					end
+					// if(j_accept) araddr <= 1'b0
 				end
 
 				2'b11: begin
@@ -87,15 +89,19 @@ module ICache_Controller(
 		case(control_state)
 			2'b00: begin
 				arvalid = 1'b1;
+				rready = 1'b0;
 			end
 			2'b01: begin
 				arvalid = 1'b0;
+				rready = 1'b0;
 			end	
 			2'b10: begin
 				rready = 1'b1;
+				arvalid = 1'b0;
 			end
 			2'b11: begin
 				rready = 1'b0;
+				arvalid = 1'b0;
 			end
 		endcase
 	end

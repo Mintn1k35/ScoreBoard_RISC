@@ -5,6 +5,7 @@ module Core(
     input wire mem_done,
     input wire [31:0] DCache_data,
     output wire stop,
+    output wire stop_fetch,
     output wire ecall,
     output wire j_accept,
     output wire [31:0] j_addr,
@@ -22,12 +23,12 @@ module Core(
     wire [4:0] rs1, rs2, rd, rd1_wb, rd2_wb, rd3_wb;
     wire [1:0] alu_state, mul_state, lsu_state, data1_depend, data2_depend;
     wire store_mem, alu, mul, lsu, jal, jalr, branch, auipc, imm, lui, write_en1, write_en2, write_en3, alu_done,
-    mul_done, lsu_done, full, empty, read_en, j_accept_tmp, j_wait_tmp, alu_load, mul_load, lsu_load, stop_fetch;
+    mul_done, lsu_done, full, empty, read_en, j_accept_tmp, j_wait_tmp, alu_load, mul_load, lsu_load;
 
     wire [31:0] pc = fetch_instr_pc[63:32];
     wire [31:0] instr = fetch_instr_pc[31:0];
     assign pc4 = pc + 32'd4;
-    assign stop = stop_fetch | j_wait_tmp;
+    assign stop = j_wait_tmp;
     assign j_accept = j_accept_tmp & !j_wait_tmp;
 
 
