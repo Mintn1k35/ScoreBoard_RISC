@@ -16,7 +16,7 @@ module ICache_Controller(
 	output reg [31:0] araddr,
 	output reg 	arvalid,
 	output wire [1:0] arburst,
-	output wire [2:0] arcache,
+	output wire [3:0] arcache,
 	output wire [2:0] arsize,
 	output wire [7:0] arlen,
 	output wire [63:0] fetch_instr_pc
@@ -109,7 +109,7 @@ module ICache_Controller(
 	assign arburst = 2'b00;
 	assign arsize = 3'd2;
 	assign arlen = 8'd0;
-	assign arcache = 3'b011;
+	assign arcache = 4'd7;
 	assign fetch_instr_pc = (rlast & rvalid) ? {araddr - 32'd4, rdata} : 64'd0;
 
 endmodule

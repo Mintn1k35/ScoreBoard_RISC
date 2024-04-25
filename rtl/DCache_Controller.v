@@ -49,11 +49,11 @@ module DCache_Controller(
 	assign result = rdata;
 	assign awburst = (rst_n & write_mem) ? 2'b00 : 2'bz;
 	assign awlen = (rst_n & write_mem) ? 8'd0 : 8'bz;
-	assign awcache = (rst_n & write_mem) ? 4'd0 : 4'bz;
+	assign awcache = (rst_n & write_mem) ? 4'd11 : 4'bz;
 	assign awsize = (rst_n & write_mem) ? 3'd2 : 3'bz;
 	assign arburst = (rst_n & !write_mem) ? 2'b00 : 2'bz;
 	assign arlen = (rst_n & !write_mem) ? 8'd0 : 8'bz;
-	assign arcache = (rst_n & !write_mem) ? 4'd3 : 4'bz;
+	assign arcache = (rst_n & !write_mem) ? 4'd7 : 4'bz;
 	assign arsize = (rst_n & !write_mem) ? 3'd2 : 3'bz;
 	
 	always @(posedge clk)
