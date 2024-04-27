@@ -11,6 +11,7 @@ module ICache_Controller(
 	input wire ecall,
 	input wire j_accept,
 	input wire [31:0] j_addr,
+	input wire cache_rst_done,
 	// Output signals	
 	output reg rready,
 	output reg [31:0] araddr,
@@ -88,7 +89,7 @@ module ICache_Controller(
 	always @(*) begin
 		case(control_state)
 			2'b00: begin
-				arvalid = 1'b1;
+				arvalid = (!cache_rst_done) ? 1'b1 : 1'b0;
 				rready = 1'b0;
 			end
 			2'b01: begin
@@ -106,7 +107,7 @@ module ICache_Controller(
 		endcase
 	end
 
-	assign arburst = 2'b00;
+	assign arburst = 2'b01;
 	assign arsize = 3'd2;
 	assign arlen = 8'd0;
 	assign arcache = 4'd7;

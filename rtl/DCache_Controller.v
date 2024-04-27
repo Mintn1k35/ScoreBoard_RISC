@@ -16,6 +16,7 @@ module DCache_Controller(
 	input wire [31:0] rdata,
 	input wire rlast,
 	input wire rvalid,
+	input wire cache_rst_done,
 	// Output signals
 	output wire mem_done,
 	output wire [31:0] result,

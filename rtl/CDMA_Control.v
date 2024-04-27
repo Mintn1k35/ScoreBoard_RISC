@@ -63,13 +63,13 @@ module CDMA_Control(
             SET_WRITE_ADDR: begin
                 awaddr = 10'h20;
                 awvalid = 1'b1;
-                wdata = 32'd20;
+                wdata = write_addr;
                 wvalid = 1'b1;
             end
             SET_BYTE_LENGTH: begin
                 awaddr = 10'h28;
                 awvalid = 1'b1;
-                wdata = write_addr;
+                wdata = 32'd20;
                 wvalid = 1'b1;
             end
             default: begin
