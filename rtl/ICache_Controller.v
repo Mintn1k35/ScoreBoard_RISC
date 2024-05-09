@@ -50,7 +50,7 @@ module ICache_Controller(
 	always @(posedge clk or negedge rst_n) begin
 		if(!rst_n) begin
 			control_state <= 2'b00;
-			araddr <= 32'd0;
+//			araddr <= 32'd0;
 		end
 		else begin
 			case(control_state)

@@ -4,6 +4,7 @@ module CDMA_Control(
     input wire dma_en,
     input wire [31:0] read_addr,
     input wire [31:0] write_addr,
+    input wire [31:0] byte_length,
     // AW channel
     input wire awready,
     output reg [9:0] awaddr,
@@ -69,7 +70,7 @@ module CDMA_Control(
             SET_BYTE_LENGTH: begin
                 awaddr = 10'h28;
                 awvalid = 1'b1;
-                wdata = 32'd20;
+                wdata = byte_length;
                 wvalid = 1'b1;
             end
             default: begin
