@@ -5,7 +5,6 @@ module DMA_Control(
     input wire dma_rst_done,
     input wire [31:0] source_addr,
     input wire [31:0] byte_length,
-
     // AW channel of AXI-lite
     input wire awready,
     output reg [9:0] awaddr,

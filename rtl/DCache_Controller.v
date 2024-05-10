@@ -27,7 +27,7 @@ module DCache_Controller(
 	output wire [2:0] awsize,
 	output reg awvalid,
 	output reg bready,
-	output wire [31:0]	wdata,
+	output wire [31:0] wdata,
 	output reg wlast,
 	output reg [3:0] wstrb,
 	output reg wvalid,

@@ -1,20 +1,28 @@
 module Core(
     input wire clk,
     input wire rst_n,
+    // Signal for ICache_Controller
     input wire [63:0] fetch_instr_pc,
-    input wire mem_done,
-    input wire [31:0] DCache_data,
     output wire stop,
     output wire stop_fetch,
     output wire ecall,
     output wire j_accept,
     output wire [31:0] j_addr,
+    // Signal for DCache_Controller
     output wire read_mem,
     output wire write_mem,
     output wire [31:0] addr,
     output wire addr_valid,
     output wire [31:0] write_data,
-    output wire write_data_valid
+    output wire write_data_valid,
+    input wire mem_done,
+    input wire [31:0] DCache_data
+    // Signal for CDMA_Control,
+    // input wire dma_done,
+    // output wire dma_en,
+    // output wire [31:0] read_addr,
+    // output wire [31:0] write_addr,
+    // output wire [31:0] byte_length
 );
 
     wire [32:0] data1_alu, data2_alu;
@@ -56,4 +64,5 @@ module Core(
 
     LSU LSU_Instance(clk, rst_n, lsu_load, rd, {data1_depend == 2'b00, rs1_data}, {data2_depend == 2'b00, rs2_data}, {1'b1, imm_extend}, {alu_done, alu_result}, {mul_done, mul_result}, 
     ex_type, data1_depend, data2_depend, mem_done, DCache_data, lsu_state, lsu_done, rd3_wb, lsu_result, read_mem, write_mem, addr, addr_valid, write_data, write_data_valid);
+
 endmodule

@@ -5,6 +5,7 @@ module CDMA_Control(
     input wire [31:0] read_addr,
     input wire [31:0] write_addr,
     input wire [31:0] byte_length,
+    output wire dma_done,
     // AW channel
     input wire awready,
     output reg [9:0] awaddr,
@@ -84,6 +85,7 @@ module CDMA_Control(
 
 
     assign bready = 1'b1;
+    assign dma_done = ((state == SET_BYTE_LENGTH) & (awready & wready));
 endmodule
 // module CDMA_Control(
 //     input clk,
